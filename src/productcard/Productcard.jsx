@@ -35,7 +35,7 @@ const ProductCard = ({ product }) => {
 
         <div className="flex justify-between items-center mt-auto">
           <span className="text-blue-600 font-bold text-xl">
-            ${product.price.toFixed(2)}
+            Rs.{product.price}
           </span>
           <button className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 active:scale-95 text-white px-4 py-2 rounded-md shadow-md text-sm font-semibold transition duration-200 transform">
             Add to Cart
