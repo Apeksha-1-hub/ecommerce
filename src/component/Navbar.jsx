@@ -24,7 +24,7 @@ const Navbar = ({ cartItemCount = 0 }) => {
           {/* Logo */}
           <Link
             to="/home"
-            className="text-blue-600 font-extrabold text-3xl tracking-tight"
+            className="text-red-600 font-extrabold text-3xl tracking-tight"
           >
             ShopEase
           </Link>
@@ -83,7 +83,7 @@ const Navbar = ({ cartItemCount = 0 }) => {
             {/* Signup */}
             <Link
               to="/signup"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-semibold shadow transition"
+              className="bg-red-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-semibold shadow transition"
             >
               Sign Up
             </Link>
