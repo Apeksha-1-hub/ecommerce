@@ -2,7 +2,6 @@ import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import Layout from './layout/Layout'
-import Product from './product/Product'
 import Home from './home/Home'
 
 
