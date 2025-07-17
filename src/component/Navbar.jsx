@@ -7,12 +7,13 @@ import {
   UserCircleIcon,
   SearchIcon,
 } from "@heroicons/react/outline";
+import { useCart } from "../contexts/CartContext"; // ✅ Import useCart
 
-
-const Navbar = ({ cartItemCount = 0 }) => {
+const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const location = useLocation(); // get current path
+  const location = useLocation();
+  const { cartItemCount } = useCart(); // ✅ Get live cart count
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
