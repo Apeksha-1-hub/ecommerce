@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <div className="min-h-screen flex flex-col py-15">
       {/* Hero Section */}
-      <section className="bg-red-600 text-white flex flex-col md:flex-row items-center justify-center py-25 px-6 text-center md:text-left">
+      <section className="bg-gradient-to-r from-blue-800 to-blue-400  text-white flex flex-col md:flex-row items-center justify-center py-25 px-6 text-center md:text-left">
         {/* Text Content */}
         <div className="flex-1 mb-8 md:mb-0 md:pl-20">
           <h1 className="text-4xl sm:text-5xl font-extrabold max-w-3xl leading-tight  mb-10">
@@ -17,14 +17,14 @@ const Home = () => {
           </p>
           <a
             href="#products"
-            className="bg-amber-400 hover:bg-black hover:text-white text-black font-semibold px-8 py-3  rounded shadow transition"
+            className="bg-black hover:bg-white hover:text-black text-white font-semibold px-8 py-3  rounded shadow transition"
           >
             Shop Now
           </a>
         </div>
 
         {/* Image */}
-        <div className="flex-1 flex justify-center md:pl-40 ">
+        <div className="flex-1 flex justify-center md:pl-40 -mt-20">
           <img
             src="photos\girl.png"
             alt="Girl shopping with bags"
