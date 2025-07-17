@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   ShoppingCartIcon,
   MenuIcon,
@@ -8,14 +8,19 @@ import {
   SearchIcon,
 } from "@heroicons/react/outline";
 
+
 const Navbar = ({ cartItemCount = 0 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const location = useLocation(); // get current path
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     alert(`Search for: ${searchTerm}`);
   };
+
+  // Helper to check active link
+  const isActive = (path) => location.pathname === path;
 
   return (
     <nav className="bg-white fixed w-full top-0 left-0 shadow-lg border-b border-gray-200 z-50">
@@ -35,7 +40,11 @@ const Navbar = ({ cartItemCount = 0 }) => {
               <li>
                 <Link
                   to="/home"
-                  className="px-3 py-2 rounded-md hover:text-amber-500 transition-colors duration-200"
+                  className={`px-3 py-2 rounded-md transition-colors duration-200 ${
+                    isActive("/home")
+                      ? "text-amber-500 border-b-2 border-amber-500"
+                      : "hover:text-amber-500"
+                  }`}
                 >
                   Home
                 </Link>
@@ -43,7 +52,11 @@ const Navbar = ({ cartItemCount = 0 }) => {
               <li>
                 <Link
                   to="/myshoppinglist"
-                  className="px-3 py-2 rounded-md hover:text-amber-500 transition-colors duration-200"
+                  className={`px-3 py-2 rounded-md transition-colors duration-200 ${
+                    isActive("/myshoppinglist")
+                      ? "text-amber-500 border-b-2 border-amber-500"
+                      : "hover:text-amber-500"
+                  }`}
                 >
                   My Shopping List
                 </Link>
@@ -74,7 +87,11 @@ const Navbar = ({ cartItemCount = 0 }) => {
             {/* User Account */}
             <Link
               to="/login"
-              className="flex items-center px-3 py-2 rounded-md text-gray-900 hover:text-amber-500 font-semibold transition-colors duration-200"
+              className={`flex items-center px-3 py-2 rounded-md font-semibold transition-colors duration-200 ${
+                isActive("/login")
+                  ? "text-amber-500 border-b-2 border-amber-500"
+                  : "text-gray-900 hover:text-amber-500"
+              }`}
             >
               <UserCircleIcon className="w-6 h-6 mr-1" />
               Login
@@ -83,7 +100,11 @@ const Navbar = ({ cartItemCount = 0 }) => {
             {/* Signup */}
             <Link
               to="/signup"
-              className="bg-black hover:bg-blue-800 text-white px-4 py-2 rounded-md font-semibold shadow transition"
+              className={`px-4 py-2 rounded-md font-semibold shadow transition ${
+                isActive("/signup")
+                  ? "bg-blue-800 text-white"
+                  : "bg-black hover:bg-blue-800 text-white"
+              }`}
             >
               Sign Up
             </Link>
@@ -91,7 +112,11 @@ const Navbar = ({ cartItemCount = 0 }) => {
             {/* Cart */}
             <Link
               to="/cart"
-              className="relative flex items-center px-3 py-2 rounded-md hover:text-amber-500 transition-colors duration-200"
+              className={`relative flex items-center px-3 py-2 rounded-md transition-colors duration-200 ${
+                isActive("/cart")
+                  ? "text-amber-500 border-b-2 border-amber-500"
+                  : "hover:text-amber-500"
+              }`}
             >
               <ShoppingCartIcon className="w-6 h-6" />
               {cartItemCount > 0 && (
@@ -121,16 +146,22 @@ const Navbar = ({ cartItemCount = 0 }) => {
       {menuOpen && (
         <div className="md:hidden bg-white shadow-lg border-t border-gray-200 px-6 py-6 space-y-6 font-semibold text-gray-900">
           <Link
-            to="/"
+            to="/home"
             onClick={() => setMenuOpen(false)}
-            className="block px-3 py-2 rounded-md hover:text-amber-500 transition-colors duration-200"
+            className={`block px-3 py-2 rounded-md transition-colors duration-200 ${
+              isActive("/home") ? "text-amber-500" : "hover:text-amber-500"
+            }`}
           >
             Home
           </Link>
           <Link
             to="/myshoppinglist"
             onClick={() => setMenuOpen(false)}
-            className="block px-3 py-2 rounded-md hover:text-amber-500 transition-colors duration-200"
+            className={`block px-3 py-2 rounded-md transition-colors duration-200 ${
+              isActive("/myshoppinglist")
+                ? "text-amber-500"
+                : "hover:text-amber-500"
+            }`}
           >
             My Shopping List
           </Link>
@@ -156,7 +187,9 @@ const Navbar = ({ cartItemCount = 0 }) => {
           <Link
             to="/login"
             onClick={() => setMenuOpen(false)}
-            className="flex items-center px-3 py-2 rounded-md hover:text-amber-500 transition-colors duration-200"
+            className={`flex items-center px-3 py-2 rounded-md transition-colors duration-200 ${
+              isActive("/login") ? "text-amber-500" : "hover:text-amber-500"
+            }`}
           >
             <UserCircleIcon className="w-6 h-6 mr-1" />
             Login
@@ -165,7 +198,11 @@ const Navbar = ({ cartItemCount = 0 }) => {
           <Link
             to="/signup"
             onClick={() => setMenuOpen(false)}
-            className="block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-semibold shadow transition"
+            className={`block px-4 py-2 rounded-md font-semibold shadow transition ${
+              isActive("/signup")
+                ? "bg-blue-800 text-white"
+                : "bg-blue-600 hover:bg-blue-700 text-white"
+            }`}
           >
             Sign Up
           </Link>
@@ -173,7 +210,9 @@ const Navbar = ({ cartItemCount = 0 }) => {
           <Link
             to="/cart"
             onClick={() => setMenuOpen(false)}
-            className="relative flex items-center px-3 py-2 rounded-md hover:text-amber-500 transition-colors duration-200"
+            className={`relative flex items-center px-3 py-2 rounded-md transition-colors duration-200 ${
+              isActive("/cart") ? "text-amber-500" : "hover:text-amber-500"
+            }`}
           >
             <ShoppingCartIcon className="w-6 h-6" />
             {cartItemCount > 0 && (
