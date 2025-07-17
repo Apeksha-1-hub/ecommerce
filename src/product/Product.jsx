@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import ProductCard from "../productcard/Productcard";
 import Pagination from "../pagination/Pagination";
 
-
 const products = [
   {
     id: 1,
     name: "Blue Denim Jacket",
     description: "Trendy blue denim jacket for women",
-    price: 800 ,
+    price: 800,
     image: "photos/p1.png",
     onSale: true,
   },
@@ -84,6 +83,97 @@ const products = [
     image: "photos/p10.png",
     onSale: false,
   },
+ 
+  {
+    id: 11,
+    name: "Sports Cap",
+    description: "Breathable sports cap for outdoor workouts",
+    price: 499,
+    image: "photos/p10.png",
+    onSale: false,
+  },
+  {
+    id: 12,
+    name: "Women's Handbag",
+    description: "Elegant handbag for women",
+    price: 2500,
+    image: "photos/p10.png",
+    onSale: true,
+  },
+  {
+    id: 13,
+    name: "Beanie",
+    description: "Warm knitted beanie for winter",
+    price: 699,
+    image: "photos/p10.png",
+    onSale: false,
+  },
+  {
+    id: 14,
+    name: "Loafers",
+    description: "Casual loafers for men",
+    price: 2200,
+    image: "photos/p10.png",
+    onSale: false,
+  },
+  {
+    id: 15,
+    name: "Yoga Pants",
+    description: "Comfortable stretchable yoga pants",
+    price: 1500,
+    image: "photos/p10.png",
+    onSale: true,
+  },
+
+  {
+    id: 16,
+    name: "Formal Shoes",
+    description: "Elegant formal shoes for men",
+    price: 2999,
+    image: "photos/p10.png",
+    onSale: false,
+  },
+ 
+  {
+    id: 17,
+    name: "Sports Cap",
+    description: "Breathable sports cap for outdoor workouts",
+    price: 499,
+    image: "photos/p10.png",
+    onSale: false,
+  },
+  {
+    id: 18,
+    name: "Women's Handbag",
+    description: "Elegant handbag for women",
+    price: 2500,
+    image: "photos/p10.png",
+    onSale: true,
+  },
+  {
+    id: 19,
+    name: "Beanie",
+    description: "Warm knitted beanie for winter",
+    price: 699,
+    image: "photos/p10.png",
+    onSale: false,
+  },
+  {
+    id: 20,
+    name: "Loafers",
+    description: "Casual loafers for men",
+    price: 2200,
+    image: "photos/p10.png",
+    onSale: false,
+  },
+  {
+    id: 21,
+    name: "Yoga Pants",
+    description: "Comfortable stretchable yoga pants",
+    price: 1500,
+    image: "photos/p10.png",
+    onSale: true,
+  },
 ];
 
 const Products = () => {
@@ -94,7 +184,10 @@ const Products = () => {
 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
@@ -104,19 +197,30 @@ const Products = () => {
 
   return (
     <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-12">
-      <h2 className="text-2xl font-bold text-gray-900 mb-8 py-10">Our Products</h2>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {currentProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+      <div className="text-center mb-12">
+        <h2 className="text-3xl font-extrabold text-gray-900 mb-4">
+          Our Products
+        </h2>
+        <p className="max-w-2xl mx-auto text-gray-600">
+          Explore our wide range of trendy fashion items and accessories
+        </p>
       </div>
 
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-      />
+      <div className="border-t border-gray-200 pt-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          {currentProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-12 flex justify-center">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      </div>
     </section>
   );
 };
