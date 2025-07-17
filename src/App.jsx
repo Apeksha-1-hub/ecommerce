@@ -6,6 +6,7 @@ import Home from './home/Home';
 import ShoppingList from './shoppinglist/Shoppinglist';
 import Cart from './cart/Cart'; // ➡️ Import your Cart page
 import Login from './login/Login';
+import Signup from './signup/Signup';
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
           <Route path="/myshoppinglist" element={<ShoppingList />} />
           <Route path="/cart" element={<Cart />} /> 
           <Route path="/login" element={<Login/>}/>
+          <Route path="/signup" element={<Signup/>}/>
         </Route>
       </Routes>
     </BrowserRouter>
