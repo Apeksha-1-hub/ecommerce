@@ -5,6 +5,7 @@ import Layout from './layout/Layout';
 import Home from './home/Home';
 import ShoppingList from './shoppinglist/Shoppinglist';
 import Cart from './cart/Cart'; // ➡️ Import your Cart page
+import Login from './login/Login';
 
 const App = () => {
   return (
@@ -14,7 +15,8 @@ const App = () => {
           <Route index element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/myshoppinglist" element={<ShoppingList />} />
-          <Route path="/cart" element={<Cart />} /> {/* ➡️ Added Cart route */}
+          <Route path="/cart" element={<Cart />} /> 
+          <Route path="/login" element={<Login/>}/>
         </Route>
       </Routes>
     </BrowserRouter>
