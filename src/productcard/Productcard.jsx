@@ -10,8 +10,10 @@ AOS.init({ duration: 800, once: true });
 const ProductCard = ({ product }) => {
   const { addToCart } = useCart();
 
-  // MOCK login status, replace with real logic later
-  const isLoggedIn = false;
+
+  
+  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
 
   const formattedPrice = product.price.toLocaleString("en-IN");
   const rating = 4;

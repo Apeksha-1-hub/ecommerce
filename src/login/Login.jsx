@@ -27,29 +27,35 @@ const Login = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validate();
-    setErrors(validationErrors);
-    if (Object.keys(validationErrors).length === 0) {
-      setIsSubmitting(true);
-      // Show success toast
-      toast.success("Login successful!", {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-        theme: "colored",
-      });
-      // Redirect after a short delay
-      setTimeout(() => {
-        navigate("/home");
-        setIsSubmitting(false);
-      }, 2500);
-    }
-  };
+  e.preventDefault();
+  const validationErrors = validate();
+  setErrors(validationErrors);
+  if (Object.keys(validationErrors).length === 0) {
+    setIsSubmitting(true);
+
+    // ✅ Save login status
+    localStorage.setItem("isLoggedIn", "true");
+
+    // Show success toast
+    toast.success("Login successful!", {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "colored",
+    });
+
+    // Redirect after a short delay
+    setTimeout(() => {
+      navigate("/home");
+      setIsSubmitting(false);
+    }, 2500);
+  }
+};
+
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row items-center justify-center bg-gray-50">
