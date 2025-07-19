@@ -3,9 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "../authcontext/AuthContext"; // <-- Import useAuth
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();  // <-- Get login function from AuthContext
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -27,41 +30,32 @@ const Login = () => {
   };
 
   const handleSubmit = (e) => {
-  e.preventDefault();
-  const validationErrors = validate();
-  setErrors(validationErrors);
-  if (Object.keys(validationErrors).length === 0) {
-    setIsSubmitting(true);
+    e.preventDefault();
+    const validationErrors = validate();
+    setErrors(validationErrors);
 
-    // ✅ Save login status
-    localStorage.setItem("isLoggedIn", "true");
+    if (Object.keys(validationErrors).length === 0) {
+      setIsSubmitting(true);
 
-    // Show success toast
-    toast.success("Login successful!", {
-      position: "top-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "colored",
-    });
+      // Use login from context instead of localStorage.setItem directly
+      login();
 
-    // Redirect after a short delay
-    setTimeout(() => {
-      navigate("/home");
-      setIsSubmitting(false);
-    }, 2500);
-  }
-};
+      toast.success("Login successful!", {
+        position: "top-center",
+        autoClose: 2000,
+        theme: "colored",
+      });
 
+      setTimeout(() => {
+        navigate("/home");
+        setIsSubmitting(false);
+      }, 2500);
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row items-center justify-center bg-gray-50">
-      {/* Toast Container */}
       <ToastContainer />
-
       {/* Image Section */}
       <div className="hidden md:flex w-1/2 pl-20 pr-4 justify-start items-center">
         <img
@@ -71,13 +65,11 @@ const Login = () => {
           loading="lazy"
         />
       </div>
-
       {/* Form Section */}
       <div className="w-full md:w-1/2 max-w-md bg-white shadow-2xl rounded-2xl p-8 mx-4 my-10 md:my-0 animate__animated animate__fadeInRight">
         <h2 className="text-3xl font-bold mb-6 text-center text-blue-800">
           Welcome Back to ShopEase
         </h2>
-
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Email */}
           <div>
@@ -97,7 +89,6 @@ const Login = () => {
             </div>
             {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
           </div>
-
           {/* Password */}
           <div>
             <label htmlFor="password" className="block mb-1 font-semibold text-gray-700">
@@ -116,7 +107,6 @@ const Login = () => {
             </div>
             {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
           </div>
-
           {/* Submit */}
           <button
             type="submit"
@@ -126,7 +116,6 @@ const Login = () => {
             {isSubmitting ? "Logging in..." : "Login"}
           </button>
         </form>
-
         {/* Extra Links */}
         <p className="text-center text-sm text-gray-600 mt-6">
           Don't have an account?{" "}
