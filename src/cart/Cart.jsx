@@ -1,25 +1,20 @@
 import React from "react";
 import { useCart } from "../contexts/CartContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaTrashAlt, FaShoppingCart } from "react-icons/fa";
-import { useShoppingList } from "../shoppinglistcontext/ShoppingListContext";
 
 const Cart = () => {
-  
+  const navigate = useNavigate();
   const { cartItems, removeFromCart, clearCart } = useCart();
-
-  const { addToShoppingList } = useShoppingList();
-
-  const handleCheckout = () => {
-    addToShoppingList(cartItems); // Add cart items to shopping list
-    clearCart(); // Clear cart after checkout
-    alert("Purchase successful. Items added to your Shopping List.");
-  };
 
   const totalPrice = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
+
+  const handleCheckout = () => {
+    navigate("/payment", { state: { cartItems, totalPrice } });
+  };
 
   return (
     <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 py-30">
@@ -81,12 +76,12 @@ const Cart = () => {
               >
                 Clear Cart
               </button>
-               <button
-                 onClick={handleCheckout}
-                 className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-md font-semibold shadow transition"
-    >
-                 Proceed to Checkout
-                </button>
+              <button
+                onClick={handleCheckout}
+                className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-md font-semibold shadow transition"
+              >
+                Proceed to Checkout
+              </button>
             </div>
           </div>
         </div>
