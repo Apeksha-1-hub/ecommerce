@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ProductCard from "../productcard/Productcard";
 import Pagination from "../pagination/Pagination";
 
-const products = [
+export const products = [
   {
     id: 1,
     name: "Blue Denim Jacket",

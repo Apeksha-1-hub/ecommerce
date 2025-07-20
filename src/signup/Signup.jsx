@@ -63,7 +63,7 @@ const Signup = () => {
         <img
           src="photos/shoppinggirl.png"
           alt="Shopping girl"
-          className="w-full max-w-md h-auto object-contain animate__animated animate__fadeInLeft"
+          className="w-full max-w-md h-120 object-contain animate__animated animate__fadeInLeft"
           loading="lazy"
         />
       </div>

@@ -14,34 +14,34 @@ const ProductCard = ({ product }) => {
 
   const formattedPrice = product.price.toLocaleString("en-IN");
   const rating = 4;
+  console.log("DEBUG: isLoggedIn value in ProductCard:", isLoggedIn);
 
   const handleAddToCart = () => {
-    if (!isLoggedIn) {
-      Swal.fire({
-        title: "Login Required",
-        text: "Please login to add items to your cart.",
-        icon: "info",
-        confirmButtonText: "Login Now",
-        confirmButtonColor: "#3b82f6",
-        showCancelButton: true,
-        cancelButtonText: "Cancel",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // Pass redirect path and product id
-          navigate(`/login?redirect=${location.pathname}&addProductId=${product.id}`);
-        }
-      });
-    } else {
-      addToCart(product);
-      Swal.fire({
-        icon: "success",
-        title: "Added to Cart",
-        text: `${product.name} has been added to your cart.`,
-        timer: 1500,
-        showConfirmButton: false,
-      });
-    }
-  };
+  if (!isLoggedIn) {
+    Swal.fire({
+      title: "Login Required",
+      text: "Please login to add items to your cart.",
+      icon: "info",
+      confirmButtonText: "Login Now",
+      confirmButtonColor: "#3b82f6",
+      showCancelButton: true,
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate(`/login?redirect=/home&addProductId=${product.id}`);
+      }
+    });
+  } else {
+    addToCart(product);
+    Swal.fire({
+      icon: "success",
+      title: "Added to Cart",
+      text: `${product.name} has been added to your cart.`,
+      timer: 1500,
+      showConfirmButton: false,
+    });
+  }
+};
 
   return (
     <div className="bg-gray-100 rounded-2xl shadow-lg hover:shadow-xl transition-transform duration-300 overflow-hidden flex flex-col border border-gray-200 group transform hover:-translate-y-1 hover:scale-[1.02] hover:brightness-105 cursor-pointer">

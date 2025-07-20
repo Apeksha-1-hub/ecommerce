@@ -1,13 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../authcontext/AuthContext";
+import { useCart } from "../contexts/CartContext";
+import { products } from "../product/Product"; // Adjust path as needed
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login, redirectPath, setRedirectPath } = useAuth(); // include redirectPath & setter
+  const { login } = useAuth();
+  const { addToCart } = useCart();
+  const [searchParams] = useSearchParams();
+
+  const redirectPath = searchParams.get("redirect") || "/home";
+  const addProductId = searchParams.get("addProductId");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,42 +52,39 @@ const Login = () => {
       });
 
       setTimeout(() => {
-        if (redirectPath) {
-          navigate(redirectPath); // redirect to previous intended path
-          setRedirectPath(null);  // reset
-        } else {
-          navigate("/home");
+        if (addProductId) {
+          const productToAdd = products.find(p => p.id === parseInt(addProductId));
+          if (productToAdd) {
+            addToCart(productToAdd);
+          }
         }
+        navigate(redirectPath);
         setIsSubmitting(false);
       }, 2500);
     }
   };
 
-
   return (
     <div className="min-h-screen flex flex-col md:flex-row items-center justify-center bg-gray-50">
       <ToastContainer />
-      {/* Image Section */}
-      <div className="hidden md:flex w-1/2 pl-20 pr-4 justify-start items-center">
-        <img
-          src="photos/shoppinggirl.png"
-          alt="Shopping girl"
-          className="w-full max-w-md h-auto object-contain animate__animated animate__fadeInLeft"
-          loading="lazy"
-        />
-      </div>
-      {/* Form Section */}
-      <div className="w-full md:w-1/2 max-w-md bg-white shadow-2xl rounded-2xl p-8 mx-4 my-10 md:my-0 animate__animated animate__fadeInRight">
-        <h2 className="text-3xl font-bold mb-6 text-center text-blue-800">
-          Welcome Back to ShopEase
-        </h2>
+
+      {/* Left side image section */}
+    
+    <div className="hidden md:flex md:w-1/2 items-center justify-center">
+    <img
+    src="photos/shoppinggirl.png" // Replace with your actual image path
+    alt="Login Illustration"
+    className="w-full h-120 object-contain p-4"
+    />
+    </div>
+
+      {/* Login form section */}
+      <div className="w-full md:w-1/2 max-w-md bg-white shadow-2xl rounded-2xl p-8 mx-4 my-10 md:my-0">
+        <h2 className="text-3xl font-bold mb-6 text-center text-blue-800">Login</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Email */}
           <div>
-            <label htmlFor="email" className="block mb-1 font-semibold text-gray-700">
-              Email Address
-            </label>
-            <div className="flex items-center border rounded-md px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500">
+            <label htmlFor="email" className="block mb-1 font-semibold text-gray-700">Email</label>
+            <div className="flex items-center border rounded-md px-3 py-2">
               <FaEnvelope className="text-gray-400 mr-2" />
               <input
                 type="email"
@@ -93,12 +97,10 @@ const Login = () => {
             </div>
             {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
           </div>
-          {/* Password */}
+
           <div>
-            <label htmlFor="password" className="block mb-1 font-semibold text-gray-700">
-              Password
-            </label>
-            <div className="flex items-center border rounded-md px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500">
+            <label htmlFor="password" className="block mb-1 font-semibold text-gray-700">Password</label>
+            <div className="flex items-center border rounded-md px-3 py-2">
               <FaLock className="text-gray-400 mr-2" />
               <input
                 type="password"
@@ -111,7 +113,7 @@ const Login = () => {
             </div>
             {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
           </div>
-          {/* Submit */}
+
           <button
             type="submit"
             disabled={isSubmitting}
@@ -120,13 +122,6 @@ const Login = () => {
             {isSubmitting ? "Logging in..." : "Login"}
           </button>
         </form>
-        {/* Extra Links */}
-        <p className="text-center text-sm text-gray-600 mt-6">
-          Don't have an account?{" "}
-          <a href="/signup" className="text-blue-600 font-semibold hover:underline">
-            Sign Up
-          </a>
-        </p>
       </div>
     </div>
   );
