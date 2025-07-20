@@ -1,12 +1,16 @@
+
 import React from "react";
 import { FaShoppingCart, FaStar, FaRegStar } from "react-icons/fa";
 import { useCart } from "../contexts/CartContext";
 import { useAuth } from "../authcontext/AuthContext";
 import Swal from "sweetalert2";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
   const { addToCart } = useCart();
   const { isLoggedIn } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const formattedPrice = product.price.toLocaleString("en-IN");
   const rating = 4;
@@ -23,7 +27,8 @@ const ProductCard = ({ product }) => {
         cancelButtonText: "Cancel",
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location.href = "/login";
+          // Pass redirect path and product id
+          navigate(`/login?redirect=${location.pathname}&addProductId=${product.id}`);
         }
       });
     } else {
@@ -39,9 +44,7 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <div
-      className="bg-gray-100 rounded-2xl shadow-lg hover:shadow-xl transition-transform duration-300 overflow-hidden flex flex-col border border-gray-200 group transform hover:-translate-y-1 hover:scale-[1.02] hover:brightness-105 cursor-pointer"
-    >
+    <div className="bg-gray-100 rounded-2xl shadow-lg hover:shadow-xl transition-transform duration-300 overflow-hidden flex flex-col border border-gray-200 group transform hover:-translate-y-1 hover:scale-[1.02] hover:brightness-105 cursor-pointer">
       <div className="relative bg-gray-200">
         <img
           src={product.image}
@@ -61,15 +64,9 @@ const ProductCard = ({ product }) => {
         <div className="flex items-center mb-2">
           {[...Array(5)].map((_, i) =>
             i < rating ? (
-              <FaStar
-                key={i}
-                className="text-yellow-400 text-sm transition-transform duration-200 group-hover:scale-110"
-              />
+              <FaStar key={i} className="text-yellow-400 text-sm" />
             ) : (
-              <FaRegStar
-                key={i}
-                className="text-gray-300 text-sm transition-transform duration-200 group-hover:scale-110"
-              />
+              <FaRegStar key={i} className="text-gray-300 text-sm" />
             )
           )}
           <span className="ml-2 text-gray-500 text-xs">(200)</span>

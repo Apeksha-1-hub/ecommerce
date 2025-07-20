@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useAuth } from "../authcontext/AuthContext"; // <-- Import useAuth
+import { useAuth } from "../authcontext/AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();  // <-- Get login function from AuthContext
+  const { login, redirectPath, setRedirectPath } = useAuth(); // include redirectPath & setter
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,8 +36,6 @@ const Login = () => {
 
     if (Object.keys(validationErrors).length === 0) {
       setIsSubmitting(true);
-
-      // Use login from context instead of localStorage.setItem directly
       login();
 
       toast.success("Login successful!", {
@@ -47,11 +45,17 @@ const Login = () => {
       });
 
       setTimeout(() => {
-        navigate("/home");
+        if (redirectPath) {
+          navigate(redirectPath); // redirect to previous intended path
+          setRedirectPath(null);  // reset
+        } else {
+          navigate("/home");
+        }
         setIsSubmitting(false);
       }, 2500);
     }
   };
+
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row items-center justify-center bg-gray-50">
